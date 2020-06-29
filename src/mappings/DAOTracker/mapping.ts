@@ -17,6 +17,8 @@ import {
 } from '../../types/schema';
 import { createTemplate, equalStrings, fetchTemplateName } from '../../utils';
 
+import { log } from '@graphprotocol/graph-ts'
+
 export function getDAOTrackerContract(address: Address): DAOTrackerContract {
   let daoTracker = DAOTrackerContract.load(address.toHex()) as DAOTrackerContract;
   if (daoTracker == null) {
@@ -52,9 +54,14 @@ export function handleTrackDAO(event: TrackDAO): void {
   if (BlacklistedDAO.load(avatar.toHex()) != null) {
     return;
   }
-
   // If the sender of the 'track' call is the DaoCreator contract, use its arcVersion
   let daoCreatorInfo = ContractInfo.load(sender.toHex());
+  log.info('Message to be displayed: {}, {}, {}', [
+    sender.toString(),
+    (daoCreatorInfo.name).toString(),
+    'already a string',
+  ])
+
   if (daoCreatorInfo != null && equalStrings(daoCreatorInfo.name, 'DaoCreator')) {
     arcVersion = daoCreatorInfo.version;
   } else {

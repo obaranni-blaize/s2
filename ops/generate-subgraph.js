@@ -120,6 +120,7 @@ function combineFragments(fragments, isTemplate, addresses, missingAddresses) {
       } else if (mapping.dao === 'organs') {
         contractAddress = addresses[network].test[version][mapping.dao][mapping.contractName];
       } else {
+        console.log("===========> ", addresses[network][mapping.dao], network, mapping.dao)
         contractAddress = addresses[network][mapping.dao][version][mapping.contractName];
       }
 
