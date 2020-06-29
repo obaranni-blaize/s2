@@ -2,7 +2,7 @@ type TokenContract @entity {
 	id: ID!
 	address: Bytes!
 	totalSupply: BigInt!
-	owner: Bytes!
+	owner: Bytes
 	tokenHolders: [String!]
 }
 

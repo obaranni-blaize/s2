@@ -114,6 +114,5 @@ function updateTokenContract(contract: Address , tokenHolder: string): void {
   }
   tokenContract.address = contract;
   tokenContract.totalSupply = token.totalSupply();
-  tokenContract.owner = token.owner();
   tokenContract.save();
 }
