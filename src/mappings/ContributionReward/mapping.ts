@@ -9,8 +9,6 @@ import {
   ProposalExecuted,
   RedeemEther,
   RedeemExternalToken,
-  RedeemNativeToken,
-  RedeemReputation,
 } from '../../types/ContributionReward/ContributionReward';
 
 import * as domain from '../../domain';
@@ -31,7 +29,7 @@ import {
   GPReward,
 } from '../../types/schema';
 import { concat, eventId } from '../../utils';
-
+/*
 export function handleRedeemReputation(event: RedeemReputation): void {
   updateProposalAfterRedemption(event.address, event.params._proposalId, 0);
   let ent = new ContributionRewardRedeemReputation(eventId(event));
@@ -42,8 +40,8 @@ export function handleRedeemReputation(event: RedeemReputation): void {
   ent.beneficiary = event.params._beneficiary;
   ent.proposalId = event.params._proposalId;
   store.set('ContributionRewardRedeemReputation', ent.id, ent);
-}
-
+}*/
+/*
 export function handleRedeemNativeToken(event: RedeemNativeToken): void {
   updateProposalAfterRedemption(event.address, event.params._proposalId, 1);
   let ent = new ContributionRewardRedeemNativeToken(eventId(event));
@@ -55,7 +53,7 @@ export function handleRedeemNativeToken(event: RedeemNativeToken): void {
   ent.proposalId = event.params._proposalId;
   store.set('ContributionRewardRedeemNativeToken', ent.id, ent);
 }
-
+*/
 export function handleRedeemEther(event: RedeemEther): void {
   updateProposalAfterRedemption(event.address, event.params._proposalId, 2);
   let ent = new ContributionRewardRedeemEther(eventId(event));
@@ -89,7 +87,6 @@ function insertNewProposal(event: NewContributionProposal): void {
   ent.descriptionHash = event.params._descriptionHash;
   ent.externalToken = event.params._externalToken;
   ent.votingMachine = event.params._intVoteInterface;
-  ent.reputationReward = event.params._reputationChange;
   let rewards = event.params._rewards;
   ent.nativeTokenReward = rewards.shift(); // native tokens
   ent.ethReward = rewards.shift(); // eth
@@ -145,30 +142,36 @@ function updateProposalAfterRedemption(
 }
 
 export function handleProposalExecuted(event: ProposalExecuted): void {
+
   let cr = ContributionReward.bind(event.address);
+  
   let proposalId = event.params._proposalId;
+
   let proposalEnt = store.get(
     'ContributionRewardProposal',
     proposalId.toHex(),
   ) as ContributionRewardProposal;
+      
   if (proposalEnt != null) {
     let proposal = cr.organizationsProposals(event.params._avatar, proposalId);
-    proposalEnt.executedAt = proposal.value8;
+    proposalEnt.executedAt = proposal.value6;
     store.set('ContributionRewardProposal', proposalId.toHex(), proposalEnt);
   }
-
   let ent = new ContributionRewardProposalResolved(eventId(event));
+
   ent.txHash = event.transaction.hash;
   ent.contract = event.address;
   ent.avatar = event.params._avatar;
   ent.passed = (event.params._param.toI32() == 1);
   ent.proposalId = event.params._proposalId;
+
   store.set('ContributionRewardProposalResolved', ent.id, ent);
 }
 
 export function handleNewContributionProposal(
   event: NewContributionProposal,
 ): void {
+ 
   domain.handleNewContributionProposal(
     event.params._proposalId,
     event.params._avatar,
@@ -179,6 +182,7 @@ export function handleNewContributionProposal(
   );
 
   insertNewProposal(event);
+   
   let ent = new ContributionRewardNewContributionProposal(eventId(event));
   ent.txHash = event.transaction.hash;
   ent.contract = event.address;
@@ -188,7 +192,7 @@ export function handleNewContributionProposal(
   ent.externalToken = event.params._externalToken;
   ent.votingMachine = event.params._intVoteInterface;
   ent.proposalId = event.params._proposalId;
-  ent.reputationReward = event.params._reputationChange;
+  ent.reputationReward = BigInt.fromI32(0);
   let rewards = event.params._rewards;
   ent.nativeTokenReward = rewards.shift(); // native tokens
   ent.ethReward = rewards.shift(); // eth
@@ -196,4 +200,6 @@ export function handleNewContributionProposal(
   ent.periodLength = rewards.shift(); // period length
   ent.periods = rewards.shift(); // number of periods
   store.set('ContributionRewardNewContributionProposal', ent.id, ent);
+  
+  
 }
