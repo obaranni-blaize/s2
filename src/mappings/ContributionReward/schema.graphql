@@ -44,7 +44,7 @@ type ContributionRewardProposalResolved @entity {
 	contract: Bytes!
 	avatar: Bytes!
 	proposalId: Bytes!
-	passed: Boolean!
+	passed: Boolean
 }
 
 type ContributionRewardNewContributionProposal @entity {
