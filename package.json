@@ -29,7 +29,8 @@
     "lint-fix": "tslint --fix -c tslint.json 'src//**/*.ts' -e 'src//types/**/*.ts' && tslint --fix -c tslint.json 'test/**/*.ts'",
     "migrate": "node ops/migrate.js",
     "test": "npm run deploy && jest --runInBand --forceExit",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "postinstall": "rsync -a migration node_modules/@daostack/migration"
   },
   "devDependencies": {
     "@daostack/migration": "0.0.1-rc.41-v7",
