@@ -2698,8 +2698,8 @@
         "OrganizationRegister": "0x9a3B71641c9d22fbA8B92aAC1e80A41f9AA73F98",
         "Redeemer": "0x3a1b52bEe6baB7b5D788Aa0eCcB3941a9D780806",
         "UGenericScheme": "0x17825F606B206B97099F25EED705EDa3550cdeb3",
-        "ContributionReward": "0xbc612A7e4f92AE75588fF91E646d922E49f0d8fD",
-        "LockingSGT4Reputation": "0xbF3d2c2FfB85031D1107ad5396681BCc379b8E05"
+        "ContributionReward": "0xC0d6d120648B940a14B995690eEf4225A4C290FD",
+        "CustomContributionReward": "0xC0d6d120648B940a14B995690eEf4225A4C290FD"
       },
       "0.0.1-rc.33": {
         "GEN": "0x543Ff227F64Aa17eA132Bf9886cAb5DB55DCAddf",
