@@ -11,6 +11,51 @@ Our latest gratest [master branch subgraph](https://thegraph.com/explorer/subgra
 1. `git clone https://github.com/daostack/subgraph.git && cd subgraph`
 2. `npm install`
 
+# snglsDAO patch
+
+In order to ensure normal indexing of custom schemes after installing the modules, you need to add several abi files and correct several addresses.
+
+Abi files can be taken in the snglsDAO/dao-contracts/build folder, they need to be placed:
+
+- node_modules/@daostack/arc/build/contracts/LockingSGT4Reputation.json
+- node_modules/@daostack/infra/build/contracts/LockingSGT4Reputation.json
+- node_modules/@daostack/migration/contracts/0.0.1-rc.32/ContributionReward.json
+
+#### Set current contract addresses here:
+##### node_modules/@daostack/migration/migration.json
+##### (mainnet/rinkeby)/base/0.0.1-rc.32 in json structure
+
+For LockingSGT4Reputation and ContributionReward contracts
+```json
+      "0.0.1-rc.32": {
+        "GEN": "0x543Ff227F64Aa17eA132Bf9886cAb5DB55DCAddf",
+        "DAORegistry": "0x41C24232452057b9c812A94f84b8643Ee0253C44",
+        "DAOTracker": "0x32CA3feB2F10bAb5855fCb94293Cb14C3Dfa483E",
+        "ControllerCreator": "0xE40BFcE7E9AEe0b8bA7Db8cD9817983e4b243321",
+        "DaoCreator": "0x2b52902BFDf0F74a70024c9Ea41c3188f693263B",
+        "UController": "0x82e11DC4b5085DFF39AC690aAA4d4F7cDE80002D",
+        "GenesisProtocol": "0x917a2C4421fdAD00632d89b3E550230A3a0B0A31",
+        "SchemeRegistrar": "0xeEBD13d7dd6496FFE5C6909984e4152fbfcf22DD",
+        "UpgradeScheme": "0x4B93FCbC854033afa6F2b8a4763df522298db3B7",
+        "GlobalConstraintRegistrar": "0x996b7662aDB2B019e4C25166BE6f3EC68053f7A4",
+        "ContributionReward": "0xC0d6d120648B940a14B995690eEf4225A4C290FD",
+        "AbsoluteVote": "0x8558a45977E3EEF3b5d6F0143eA83d8287eBd729",
+        "QuorumVote": "0xa899aa3Ae426FA960049466853E7ec498013BA4c",
+        "TokenCapGC": "0xF85022de61824Da950aDBBAbdDcbd9048dd6e1F2",
+        "VoteInOrganizationScheme": "0xe8a4c5702d5289D7eD8A3fD16cD237900cAb2660",
+        "OrganizationRegister": "0x9a3B71641c9d22fbA8B92aAC1e80A41f9AA73F98",
+        "Redeemer": "0x3a1b52bEe6baB7b5D788Aa0eCcB3941a9D780806",
+        "UGenericScheme": "0x17825F606B206B97099F25EED705EDa3550cdeb3",
+        "LockingSGT4Reputation": "0x84E5A718f13960822A4422C64b91FbA6Cf29D07f"
+      },
+```
+
+Also check contract addresses here:
+- daos/rinkeby/sngls.json
+- daos/mainnet/snglsDao.jsons
+
+
+
 ## Testing
 
 Run the tests in the host container:
